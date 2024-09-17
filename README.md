@@ -16,7 +16,7 @@ curl -s https://raw.githubusercontent.com/aetherbird/auto_compressor/main/auto_c
 
 ## How to Use
 
-Once you've installed the auto_compressor, you can use the following command to compress your videos:
+Once you've installed go and cloned the auto_compressor program, you can use the following command to compress your videos:
 
 ```bash
 go run auto_compressor.go <input_file.mp4> <desired_output_size_MB>
