@@ -1,6 +1,6 @@
 # auto_compressor.go
 
-A simple command-line tool designed to compress MP4 video files to a desired output size using FFmpeg. Calculates the appropriate video bitrate based on the duration of the video and compresses it to the target size while maintaining audio quality.
+A command-line tool for Linux, designed to compress MP4 video files to a desired output size using FFmpeg. Calculates the appropriate video bitrate based on the duration of the video and compresses it to the target size while maintaining audio quality.
 
 ## Dependencies
 
