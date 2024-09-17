@@ -157,7 +157,7 @@ func main() {
 	inputFile := os.Args[1]
 	desiredSizeMB, err := strconv.Atoi(os.Args[2])
 	if err != nil {
-		log.Fatalf("Invalid output size: %v", err)
+	nd 	log.Fatalf("Invalid output size: %v", err)
 	}
 
 	duration, videoBitrate, audioBitrate, err := getVideoInfo(inputFile)
