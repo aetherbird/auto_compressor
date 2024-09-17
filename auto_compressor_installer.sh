@@ -36,6 +36,13 @@ else
     install_package "ffmpeg"
 fi
 
+# check for git
+if check_installed "git"; then                                                                   
+    echo "awesome! git is already installed."                                                    
+else                                                                                                
+    echo "looks like git is missing. installing it for you..."                                   
+    install_package "git"
+
 # verify that the current working directory is writable and usable
 if [ ! -w "$PWD" ]; then
     echo "whoops! you don't have write permission for the current directory: $PWD"
@@ -57,6 +64,9 @@ else
     fi
 fi
 
+echo
+echo
+echo
 cat << "EOF"
           .--.
          |o_o |
@@ -66,7 +76,9 @@ cat << "EOF"
       /'\_   _/`\
       \___)=(___/
 EOF
-
+echo
+echo
+echo
 # wrap-up: instructions for running the go program!
 echo "auto_compressor is ready"
 echo "Here's how you can get started:"
