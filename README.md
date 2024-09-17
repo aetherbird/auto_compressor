@@ -4,7 +4,7 @@ A command-line tool for Linux, designed to compress MP4 video files to a desired
 
 ## Dependencies
 
-This Linux CLI tool uses go and ffmpeg. 
+go and ffmpeg
 
 ## Installation
 
