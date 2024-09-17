@@ -67,7 +67,7 @@ fi
 echo
 echo
 echo
-cat << "EOF"
+cat << 'EOF'
           .--.
          |o_o |
          |:_/ |
