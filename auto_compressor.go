@@ -15,7 +15,7 @@ import (
 // check that number of arguments is valid
 func checkArgs() {
 	if len(os.Args) != 3 {
-		fmt.Println("Usage: go run main.go <input_file.mp4> <desired_output_size_MB>")
+		fmt.Println("Usage: go run auto_compressor.go <input_file.mp4> <desired_output_size_MB>")
 		os.Exit(1)
 	}
 }
