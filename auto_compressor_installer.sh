@@ -67,18 +67,6 @@ fi
 echo
 echo
 echo
-cat << 'EOF'
-          .--.
-         |o_o |
-         |:_/ |
-        //   \ \
-       (|     | )
-      /'\_   _/`\
-      \___)=(___/
-EOF
-echo
-echo
-echo
 # wrap-up: instructions for running the go program!
 echo "auto_compressor is ready"
 echo "Here's how you can get started:"
