@@ -15,34 +15,37 @@ import (
 // check that number of arguments is valid
 func checkArgs() {
 	if len(os.Args) != 3 {
-		fmt.Println("Usage: go run auto_compressor.go <input_file.mp4> <desired_output_size_MB>")
+		fmt.Println("usage: go run auto_compressor.go <input_file.mp4> <desired_output_size_MB>")
 		os.Exit(1)
 	}
 }
 
-// run ffmpeg ti get video duration and bitrate
+// run ffmpeg to get video duration and bitrates
 func getVideoInfo(inputFile string) (float64, int, int, error) {
 	cmd := exec.Command("ffmpeg", "-i", inputFile)
 
-	// ffmpeg outputs the video info to stderr, not stdout
+	// ffmpeg sends the info to stderr, not stdout
 	stderr, err := cmd.StderrPipe()
 	if err != nil {
 		return 0, 0, 0, err
 	}
 
+	// start the ffmpeg command
 	if err := cmd.Start(); err != nil {
 		return 0, 0, 0, err
 	}
 
-	// read the stderr output (where ffmpeg writes the info we need)
+	// read the stderr output where ffmpeg writes the info
 	outputBytes, err := io.ReadAll(stderr)
 	if err != nil {
 		return 0, 0, 0, err
 	}
 
+	// wait for the command to finish
 	if err := cmd.Wait(); err != nil {
-		// ffmpeggy returns non-zero exit code even when it's just printing info
+		// ffmpeg returns a non-zero exit code even when just printing info
 		if exitError, ok := err.(*exec.ExitError); ok && exitError.ExitCode() != 0 {
+			// ignore the error since it's expected
 		} else {
 			return 0, 0, 0, err
 		}
@@ -50,7 +53,7 @@ func getVideoInfo(inputFile string) (float64, int, int, error) {
 
 	outputStr := string(outputBytes)
 
-	// parse duration and bitrates from the output
+	// extract duration and bitrates from the output
 	duration := parseDuration(outputStr)
 	if duration == 0 {
 		return 0, 0, 0, fmt.Errorf("could not parse duration")
@@ -63,7 +66,7 @@ func getVideoInfo(inputFile string) (float64, int, int, error) {
 
 	audioBitrate := parseAudioBitrate(outputStr)
 	if audioBitrate == 0 {
-		// default audio bitrate if a bitrate is not found
+		// default audio bitrate if not found
 		audioBitrate = 128
 	}
 
@@ -117,13 +120,13 @@ func parseAudioBitrate(output string) int {
 	return 0
 }
 
-// calc the desired video bitrate based on the desired output file size and audio bitrate
+// calculate the desired video bitrate based on desired output size and audio bitrate
 func calculateDesiredBitrate(duration float64, desiredSizeMB int, audioBitrate int) (int, error) {
-  // convert MB to KB
-  desiredSizeKB := float64(desiredSizeMB * 1024)
-  // calc the total bitrate in kbps
+	// convert mb to kb
+	desiredSizeKB := float64(desiredSizeMB * 1024)
+	// calculate total bitrate in kbps
 	totalBitrate := (desiredSizeKB * 8) / duration
-  // subtract the audio bitrate
+	// subtract the audio bitrate to get video bitrate
 	videoBitrate := totalBitrate - float64(audioBitrate)
 
 	// set a minimum video bitrate at 100 kbps
@@ -135,11 +138,12 @@ func calculateDesiredBitrate(duration float64, desiredSizeMB int, audioBitrate i
 	return int(math.Round(videoBitrate)), nil
 }
 
-// lets compress the video with the calculated bitrate
+// compress the video with the calculated bitrate
 func compressVideo(inputFile string, desiredBitrate int) {
 	baseName := filepath.Base(inputFile)
 	outputFile := "compressed_" + baseName
 
+	// run ffmpeg with the new video bitrate
 	cmd := exec.Command("ffmpeg", "-i", inputFile, "-b:v", fmt.Sprintf("%dk", desiredBitrate), outputFile)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -148,7 +152,7 @@ func compressVideo(inputFile string, desiredBitrate int) {
 		log.Fatalf("ffmpeg compression failed: %v", err)
 	}
 
-	fmt.Printf("Video compressed successfully to %s with bitrate %d kbps\n", outputFile, desiredBitrate)
+	fmt.Printf("video compressed successfully to %s with bitrate %d kbps\n", outputFile, desiredBitrate)
 }
 
 func main() {
@@ -157,25 +161,28 @@ func main() {
 	inputFile := os.Args[1]
 	desiredSizeMB, err := strconv.Atoi(os.Args[2])
 	if err != nil {
-	nd 	log.Fatalf("Invalid output size: %v", err)
+		log.Fatalf("invalid output size: %v", err)
 	}
 
+	// get video info like duration and bitrates
 	duration, videoBitrate, audioBitrate, err := getVideoInfo(inputFile)
 	if err != nil {
-		log.Fatalf("Failed to get video info: %v", err)
+		log.Fatalf("failed to get video info: %v", err)
 	}
 
-	fmt.Printf("Video duration: %.2f seconds\n", duration)
-	fmt.Printf("Original video bitrate: %d kbps\n", videoBitrate)
-	fmt.Printf("Audio bitrate: %d kbps\n", audioBitrate)
+	fmt.Printf("video duration: %.2f seconds\n", duration)
+	fmt.Printf("original video bitrate: %d kbps\n", videoBitrate)
+	fmt.Printf("audio bitrate: %d kbps\n", audioBitrate)
 
+	// calculate what the new video bitrate should be
 	desiredBitrate, err := calculateDesiredBitrate(duration, desiredSizeMB, audioBitrate)
 	if err != nil {
-		log.Fatalf("Error: %v", err)
+		log.Fatalf("error: %v", err)
 	}
 
-	fmt.Printf("Calculated video bitrate for desired output size: %d kbps\n", desiredBitrate)
+	fmt.Printf("calculated video bitrate for desired output size: %d kbps\n", desiredBitrate)
 
+	// run the compression with the new bitrate
 	compressVideo(inputFile, desiredBitrate)
 }
 
