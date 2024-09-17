@@ -67,6 +67,17 @@ fi
 
 echo
 echo
+echo
+cat << "EOF"
+          .--.
+         |o_o |
+         |:_/ |
+        //   \ \
+       (|     | )
+      /'\_   _/`\
+      \___)=(___/
+EOF
+
 # wrap-up: instructions for running the go program!
 echo "auto_compressor is ready"
 echo "Here's how you can get started:"
@@ -74,7 +85,7 @@ echo "1. Navigate into the 'auto_compressor' directory:"
 echo "   cd auto_compressor"
 echo "2. Run the go program using the following command:"
 echo "   go run auto_compressor.go <input_file.mp4> <desired_output_size_in_MB>"
-echo "I.E:
-echo "   go run auto_compressor.go ~/Videos/my_cool_video.mp4 300
+echo "I.E:"
+echo "   go run auto_compressor.go ~/Videos/my_cool_video.mp4 300"
 echo "...and that's it! Happy compressing!"
 
