@@ -42,7 +42,6 @@ if check_installed "git"; then
 else                                                                                                
     echo "looks like git is missing. installing it for you..."                                   
     install_package "git"
-fi
 
 # verify that the current working directory is writable and usable
 if [ ! -w "$PWD" ]; then
@@ -68,16 +67,6 @@ fi
 echo
 echo
 echo
-cat << "EOF"
-          .--.
-         |o_o |
-         |:_/ |
-        //   \ \
-       (|     | )
-      /'\_   _/`\
-      \___)=(___/
-EOF
-
 # wrap-up: instructions for running the go program!
 echo "auto_compressor is ready"
 echo "Here's how you can get started:"
