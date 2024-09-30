@@ -1,18 +1,14 @@
 #!/bin/bash
 
-# function to check if a program is installed
 function check_installed {
     if ! command -v "$1" &> /dev/null
     then
-        # return false if the program isn't found
         return 1
     else
-        # return true if the program is found
         return 0
     fi
 }
 
-# function to install a package
 function install_package {
     echo "updating your package lists... this might take a sec!"
     sudo apt-get update
@@ -20,7 +16,6 @@ function install_package {
     sudo apt-get install -y "$1"
 }
 
-# check if our programming language, go, is installed
 if check_installed "go"; then
     echo "yay! go is already installed."
 else
@@ -28,7 +23,6 @@ else
     install_package "golang"
 fi
 
-# check if the mighty media swiss-army knife (ffmpeg) is installed
 if check_installed "ffmpeg"; then
     echo "awesome! ffmpeg is already installed."
 else
@@ -36,7 +30,6 @@ else
     install_package "ffmpeg"
 fi
 
-# check for git
 if check_installed "git"; then                                                                   
     echo "awesome! git is already installed."                                                    
 else                                                                                                
@@ -53,7 +46,6 @@ else
     echo "perfect! you can write here. let's move forward!"
 fi
 
-# clone the go program from github
 if [ -d "auto_compressor" ]; then
     echo "hmm... looks like 'auto_compressor' directory already exists. skipping the clone."
 else
@@ -61,7 +53,7 @@ else
     git clone https://github.com/aetherbird/auto_compressor.git
     if [ $? -ne 0 ]; then
         echo "uh-oh, something went wrong while cloning the repository. try checking your internet connection!"
-        exit 1  # since cloning failed, we exit
+        exit 1
     fi
 fi
 
@@ -78,7 +70,6 @@ cat << "EOF"
       \___)=(___/
 EOF
 
-# wrap-up: instructions for running the go program!
 echo "auto_compressor is ready"
 echo "Here's how you can get started:"
 echo "1. Navigate into the 'auto_compressor' directory:"
