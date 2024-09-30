@@ -37,10 +37,8 @@ else
     install_package "git"
 fi
 
-# verify that the current working directory is writable and usable
 if [ ! -w "$PWD" ]; then
     echo "whoops! you don't have write permission for the current directory: $PWD"
-    # no permission, no fun, no script execution
     exit 1
 else
     echo "perfect! you can write here. let's move forward!"
