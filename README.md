@@ -8,7 +8,7 @@ go and ffmpeg
 
 ## Installation
 
-If you are on a Debian, Ubuntu, or Mint-based distro, you can use the following one-liner to install dependencies and clone the script:
+If you are on a Debian or Ubuntu-based distro, you can use the following one-liner to install dependencies and clone the script:
 
 ```bash
 curl -s https://raw.githubusercontent.com/aetherbird/auto_compressor/main/auto_compressor_installer.sh | bash
