@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// check that number of arguments is valid
+// check number of args
 func checkArgs() {
 	if len(os.Args) != 3 {
 		fmt.Println("usage: go run auto_compressor.go <input_file.mp4> <desired_output_size_MB>")
@@ -185,4 +185,3 @@ func main() {
 	// run the compression with the new bitrate
 	compressVideo(inputFile, desiredBitrate)
 }
-
