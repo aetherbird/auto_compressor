@@ -27,4 +27,27 @@ For example, to compress a video to 50 MB:
 ```bash
 go run auto_compressor.go ~/Videos/my_video.mp4 50
 ```
+## Compile
 
+Compile into a binary:
+
+```bash
+go build auto_compressor.go
+```
+
+Add to your local or system $PATH:
+
+Local (example):
+```bash
+cp -av auto_compressor ~/.local/bin/
+```
+
+System (example):
+```bash
+cp -av auto_compressor /usr/local/bin/
+```
+
+You are now ready to invoke:
+```bash
+auto_compressor <input_file.mp4> <desired_output_size_MB>
+```
