@@ -29,7 +29,7 @@ go run auto_compressor.go ~/Videos/my_video.mp4 50
 ```
 ## Compile
 
-Compile into a binary:
+Compile to binary:
 
 ```bash
 go build auto_compressor.go
